@@ -4089,9 +4089,8 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
     xTZ2PointSearch( pcPatternKey, cStruct, pcMvSrchRngLT, pcMvSrchRngRB );
   }
 
-  // Melhor MV apos a etapa de Busca Inicial, esse ponto sera o centro para a Busca Raster
-  Int  centerX = cStruct.iBestX;
-  Int  centerY = cStruct.iBestY;
+ 
+  
 
   end_t = clock();
   total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
@@ -4129,19 +4128,32 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
     if ( bEnableRasterSearch && ( ((Int)(cStruct.uiBestDistance) > iRaster) || bAlwaysRasterSearch ) )
     {
       cStruct.uiBestDistance = iRaster;
+      int CentroX=(iSrchRngHorRight-iSrchRngHorLeft)/2; // Centro relativo em X
+   	  int CentroY=(iSrchRngVerTop-iSrchRngVerBottom)/2; // Centro relativo em y
+      int DeltaX=0;  // Distancia entre o ponto e o centro relativo;
+   	  int DeltaY=0;  
+     	  
       for ( iStartY = iSrchRngVerTop; iStartY <= iSrchRngVerBottom; iStartY += iRaster )
       {
         for ( iStartX = iSrchRngHorLeft; iStartX <= iSrchRngHorRight; iStartX += iRaster )
         {
           xTZSearchHelp( pcPatternKey, cStruct, iStartX, iStartY, 0, iRaster );
-
         }
         
       }
+      DeltaX=cStruct.iBestX-CentroX;
+      DeltaY=cStruct.iBestY-CentroY;
+      distrubuicao[256+DeltaX][256+DeltaY]++; 
+     
+
       // Coletar MV do melhor candidato
       // cStruct.iBestX
+
+      
     }
   }
+
+  
 
   end_t = clock();
   total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
