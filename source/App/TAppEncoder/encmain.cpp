@@ -58,6 +58,7 @@
 int matriz_skip[8][4]={{0}};
 int matriz_inter[8][4]={{0}};
 int matriz_intra[8][4]={{0}};
+int distrubuicao[513][513]; 
 int codificacao=0;
 double complexidade=0;
 int vetor[22]={0};
@@ -88,6 +89,15 @@ int main(int argc, char* argv[])
 {
   TAppEncTop  cTAppEncTop;
 
+
+  for(int i=0;i<513;i++) 
+    for(int j=0;j<513;j++)
+      distrubuicao[i][j]=0;
+
+  FILE *arquivo;
+  arquivo = fopen("HeatMap.txt","w");
+  if(arquivo==NULL)
+    printf("Erro na criação do arquivo!"); 
 
   //...........................código vladimir........................................
 
@@ -145,7 +155,7 @@ int main(int argc, char* argv[])
 
   // ending time
   dResult = (Double)(clock()-lBefore) / CLOCKS_PER_SEC;
-  printf("\n Total Time: %12.3f sec.\n", dResult);
+  printf("\n Total Time: %12.3f sec.\n", dRes***** Codificaçãoult);
 
 
   //...........................código vladimir........................................
@@ -211,6 +221,14 @@ int main(int argc, char* argv[])
   cTAppEncTop.destroy();
 
   return 0;
+
+  for(int i=0;i<513;i++){
+    for(int j=0;j<513;j++)
+      fprintf(arquivo,"%d ",distrubuicao[i][j]); 
+    fprintf(arquivo,"\n");
+  }
+
+  fclose(arquivo);
 }
 
 //! \}

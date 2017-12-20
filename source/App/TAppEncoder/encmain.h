@@ -11,6 +11,7 @@
   extern int matriz_inter[8][4];// matriz para contar PUs Inter
   extern int matriz_intra[8][4];// matriz para contar PUs Intra
   extern int codificacao;// para habilitar e desabilitar a contagem, evita contar a PU na compressão e também na codificação
+  extern int distrubuicao[513][513]; 
 
 //...........................código vladimir................................
 
