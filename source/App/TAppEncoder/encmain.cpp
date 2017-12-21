@@ -58,7 +58,7 @@
 int matriz_skip[8][4]={{0}};
 int matriz_inter[8][4]={{0}};
 int matriz_intra[8][4]={{0}};
-int distrubuicao[513][513]; 
+int distrubuicao[102][102]; 
 int codificacao=0;
 double complexidade=0;
 int vetor[22]={0};
@@ -90,8 +90,8 @@ int main(int argc, char* argv[])
   TAppEncTop  cTAppEncTop;
 
 
-  for(int i=0;i<513;i++) 
-    for(int j=0;j<513;j++)
+  for(int i=0;i<102;i++) 
+    for(int j=0;j<102;j++)
       distrubuicao[i][j]=0;
 
   FILE *arquivo;
@@ -220,8 +220,8 @@ int main(int argc, char* argv[])
   // destroy application encoder class
   cTAppEncTop.destroy();
  
-  for (int i=0;i<513;i++) {
-      for (int j=0;j<513;j++) {
+  for (int i=0;i<102;i++) {
+      for (int j=0;j<102;j++) {
           	fprintf(arquivo,"%d ",distrubuicao[i][j]); 
      	}
         fprintf(arquivo,"\n");

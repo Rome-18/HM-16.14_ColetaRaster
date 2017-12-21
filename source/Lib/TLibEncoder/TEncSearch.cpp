@@ -4131,7 +4131,9 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
       int CentroX=0; // Centro relativo em X
       int CentroY=0; // Centro relativo em Y
       int DeltaX=0;  // Distancia entre o ponto e o centro relativo;
-   	  int DeltaY=0; 
+   	  int DeltaY=0;
+   	  int TempX;
+   	  int TempY; 
    	  if(iSrchRngVerTop>=0 && iSrchRngVerBottom<0)
       	CentroY=((iSrchRngVerTop-iSrchRngVerBottom)/2)+iSrchRngVerBottom;
       else 
@@ -4151,14 +4153,15 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
       }
       DeltaX=cStruct.iBestX-CentroX;
       DeltaY=cStruct.iBestY-CentroY;
-     
-      //printf("DeltaX: %d DeltaY: %d MatrizX: %d MatrizY: %d \n",DeltaX,DeltaY,(256+DeltaX),(256 + DeltaY));
-      //printf("BestX: %d  BestY: %d CenterX: %d CenterY: %d \n",cStruct.iBestX,cStruct.iBestY,CentroX,CentroY);
-      //printf("Top: %d Bottom: %d Right: %d Left: %d \n",iSrchRngVerTop,iSrchRngVerBottom,iSrchRngHorRight,iSrchRngHorLeft);
-      //printf(" \n \n");
-      distrubuicao[256+DeltaX][256+DeltaY]++; 
-      printf("Distribuicao  %d\n",distrubuicao[256+DeltaX][256+DeltaY]);
-    }
+      TempX=(256+DeltaX);
+      TempY=(256+DeltaY);
+      
+      while((TempX % 5)!=0 && TempX<510) // Se não caiu no range do raster, forçar ele sempre para cima e direita
+      	TempX++;      
+      while((TempY % 5)!=0 && TempY<510)
+      	TempY++;      	
+      distrubuicao[(TempX)/5][(TempY)/5]++; 
+      }
   }
 
   
