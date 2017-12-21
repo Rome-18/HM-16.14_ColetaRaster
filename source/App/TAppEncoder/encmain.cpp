@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
 
   // ending time
   dResult = (Double)(clock()-lBefore) / CLOCKS_PER_SEC;
-  printf("\n Total Time: %12.3f sec.\n", dRes***** Codificaçãoult);
+  printf("\n Total Time: %12.3f sec.\n", dResult);
 
 
   //...........................código vladimir........................................
@@ -219,16 +219,16 @@ int main(int argc, char* argv[])
 
   // destroy application encoder class
   cTAppEncTop.destroy();
-
-  return 0;
-
-  for(int i=0;i<513;i++){
-    for(int j=0;j<513;j++)
-      fprintf(arquivo,"%d ",distrubuicao[i][j]); 
-    fprintf(arquivo,"\n");
-  }
-
+ 
+  for (int i=0;i<513;i++) {
+      for (int j=0;j<513;j++) {
+          	fprintf(arquivo,"%d ",distrubuicao[i][j]); 
+     	}
+        fprintf(arquivo,"\n");
+   }
+ 
   fclose(arquivo);
+  return 0;
 }
-
+	
 //! \}

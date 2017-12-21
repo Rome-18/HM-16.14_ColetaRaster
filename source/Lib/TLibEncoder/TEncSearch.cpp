@@ -4128,10 +4128,18 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
     if ( bEnableRasterSearch && ( ((Int)(cStruct.uiBestDistance) > iRaster) || bAlwaysRasterSearch ) )
     {
       cStruct.uiBestDistance = iRaster;
-      int CentroX=(iSrchRngHorRight-iSrchRngHorLeft)/2; // Centro relativo em X
-   	  int CentroY=(iSrchRngVerTop-iSrchRngVerBottom)/2; // Centro relativo em y
+      int CentroX=0; // Centro relativo em X
+      int CentroY=0; // Centro relativo em Y
       int DeltaX=0;  // Distancia entre o ponto e o centro relativo;
-   	  int DeltaY=0;  
+   	  int DeltaY=0; 
+   	  if(iSrchRngVerTop>=0 && iSrchRngVerBottom<0)
+      	CentroY=((iSrchRngVerTop-iSrchRngVerBottom)/2)+iSrchRngVerBottom;
+      else 
+      	CentroY=((iSrchRngVerTop+iSrchRngVerBottom)/2); 
+      if(iSrchRngHorRight>=0 && iSrchRngHorLeft<0)    
+       	CentroX=((iSrchRngHorRight-iSrchRngHorLeft)/2)+iSrchRngHorLeft; 
+      else
+      	CentroX=((iSrchRngHorRight+iSrchRngHorLeft)/2); 
      	  
       for ( iStartY = iSrchRngVerTop; iStartY <= iSrchRngVerBottom; iStartY += iRaster )
       {
@@ -4143,13 +4151,13 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
       }
       DeltaX=cStruct.iBestX-CentroX;
       DeltaY=cStruct.iBestY-CentroY;
-      distrubuicao[256+DeltaX][256+DeltaY]++; 
      
-
-      // Coletar MV do melhor candidato
-      // cStruct.iBestX
-
-      
+      //printf("DeltaX: %d DeltaY: %d MatrizX: %d MatrizY: %d \n",DeltaX,DeltaY,(256+DeltaX),(256 + DeltaY));
+      //printf("BestX: %d  BestY: %d CenterX: %d CenterY: %d \n",cStruct.iBestX,cStruct.iBestY,CentroX,CentroY);
+      //printf("Top: %d Bottom: %d Right: %d Left: %d \n",iSrchRngVerTop,iSrchRngVerBottom,iSrchRngHorRight,iSrchRngHorLeft);
+      //printf(" \n \n");
+      distrubuicao[256+DeltaX][256+DeltaY]++; 
+      printf("Distribuicao  %d\n",distrubuicao[256+DeltaX][256+DeltaY]);
     }
   }
 
