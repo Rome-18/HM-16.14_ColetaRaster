@@ -45,6 +45,7 @@
 #include "TAppEncCfg.h"
 #include "TAppCommon/program_options_lite.h"
 #include "TLibEncoder/TEncRateCtrl.h"
+#include "encmain.h"//minhas variáveis globais
 #ifdef WIN32
 #define strdup _strdup
 #endif
@@ -1568,6 +1569,9 @@ Bool TAppEncCfg::parseCfg( Int argc, TChar* argv[] )
 
   // print-out parameters
   xPrintParameter();
+
+  sequence = m_inputFileName;
+  QP = m_fQP;
 
   return true;
 }

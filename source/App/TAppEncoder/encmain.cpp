@@ -52,13 +52,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "encmain.h"//minhas variáveis globais
+#include <string>
 
 // inicialização das globais
 
 int matriz_skip[8][4]={{0}};
 int matriz_inter[8][4]={{0}};
 int matriz_intra[8][4]={{0}};
-int distrubuicao[102][102]; 
+unsigned long int distribuicao[102][102]={{0}}; 
 int codificacao=0;
 double complexidade=0;
 int vetor[22]={0};
@@ -74,6 +75,10 @@ double tempo_predS[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 double tempo_firstS[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 double tempo_rasterS[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 double tempo_refinS[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+double QP = 0;
+std::string sequence = "";
+
 
 
 
@@ -92,12 +97,11 @@ int main(int argc, char* argv[])
 
   for(int i=0;i<102;i++) 
     for(int j=0;j<102;j++)
-      distrubuicao[i][j]=0;
+      distribuicao[i][j]=0;
 
-  FILE *arquivo;
-  arquivo = fopen("HeatMap.txt","w");
-  if(arquivo==NULL)
-    printf("Erro na criação do arquivo!"); 
+
+  
+	
 
   //...........................código vladimir........................................
 
@@ -205,8 +209,18 @@ int main(int argc, char* argv[])
   printf("Tempo Raster: %f\n", tempo_raster);
   printf("Tempo Refinement: %f\n", tempo_refinement);
   printf("Tempo TZ: %f\n", tempo_tz);
-  
 
+  std::string filename;
+  std::ostringstream strs;
+  strs << QP;
+  int pos=sequence.find_last_of("/");
+  filename=sequence.substr(pos+1,(sequence.length()-4)-(pos+1))+"_"+strs.str()+".out";
+
+  FILE *arquivo;
+  arquivo = fopen(filename.c_str(),"w");
+  if(arquivo==NULL)
+    printf("Erro na criação do arquivo!"); 
+  
   /*for(int i=0; i<8; i++){
     printf("%d ", count_rasterS[i]);
   }
@@ -222,7 +236,7 @@ int main(int argc, char* argv[])
  
   for (int i=0;i<102;i++) {
       for (int j=0;j<102;j++) {
-          	fprintf(arquivo,"%d ",distrubuicao[i][j]); 
+          	fprintf(arquivo,"%lu ",distribuicao[i][j]); 
      	}
         fprintf(arquivo,"\n");
    }

@@ -11,7 +11,7 @@
   extern int matriz_inter[8][4];// matriz para contar PUs Inter
   extern int matriz_intra[8][4];// matriz para contar PUs Intra
   extern int codificacao;// para habilitar e desabilitar a contagem, evita contar a PU na compressão e também na codificação
-  extern int distrubuicao[102][102]; 
+  extern unsigned long int distribuicao[102][102]; 
 
 //...........................código vladimir................................
 
@@ -28,5 +28,7 @@
   extern double tempo_rasterS[13];
   extern double tempo_refinS[13];
   
-  extern float QP;
+  extern double QP;
+
+  extern std::string sequence;
 

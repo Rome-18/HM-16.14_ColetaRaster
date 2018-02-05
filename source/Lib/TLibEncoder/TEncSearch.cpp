@@ -4128,40 +4128,53 @@ Void TEncSearch::xTZSearch( const TComDataCU* const pcCU,
     if ( bEnableRasterSearch && ( ((Int)(cStruct.uiBestDistance) > iRaster) || bAlwaysRasterSearch ) )
     {
       cStruct.uiBestDistance = iRaster;
+      
       int CentroX=0; // Centro relativo em X
       int CentroY=0; // Centro relativo em Y
       int DeltaX=0;  // Distancia entre o ponto e o centro relativo;
    	  int DeltaY=0;
    	  int TempX;
    	  int TempY; 
-   	  if(iSrchRngVerTop>=0 && iSrchRngVerBottom<0)
-      	CentroY=((iSrchRngVerTop-iSrchRngVerBottom)/2)+iSrchRngVerBottom;
+
+      int bkpBestX = cStruct.iBestX;
+      int bkpBestY = cStruct.iBestY;
+
+
+   	  if(iSrchRngVerBottom>=0 && iSrchRngVerTop<0)
+      	CentroY=((iSrchRngVerBottom-iSrchRngVerTop)/2)+iSrchRngVerTop;
       else 
-      	CentroY=((iSrchRngVerTop+iSrchRngVerBottom)/2); 
+      	CentroY=((iSrchRngVerBottom+iSrchRngVerTop)/2); 
+      
       if(iSrchRngHorRight>=0 && iSrchRngHorLeft<0)    
        	CentroX=((iSrchRngHorRight-iSrchRngHorLeft)/2)+iSrchRngHorLeft; 
       else
-      	CentroX=((iSrchRngHorRight+iSrchRngHorLeft)/2); 
+      	CentroX=((iSrchRngHorRight+iSrchRngHorLeft)/2);
+
      	  
       for ( iStartY = iSrchRngVerTop; iStartY <= iSrchRngVerBottom; iStartY += iRaster )
       {
         for ( iStartX = iSrchRngHorLeft; iStartX <= iSrchRngHorRight; iStartX += iRaster )
         {
+          //printf("(%d,%d) (%d,%d) (%d,%d) (%d,%d)\n", iSrchRngVerTop, iSrchRngVerBottom, iSrchRngHorLeft, iSrchRngHorRight, iStartX, iStartY, CentroX, CentroY);
+          //exit(0);
           xTZSearchHelp( pcPatternKey, cStruct, iStartX, iStartY, 0, iRaster );
         }
         
       }
-      DeltaX=cStruct.iBestX-CentroX;
-      DeltaY=cStruct.iBestY-CentroY;
-      TempX=(256+DeltaX);
-      TempY=(256+DeltaY);
+
+      if(cStruct.iBestX != bkpBestX || cStruct.iBestY != bkpBestY){
+        DeltaX=cStruct.iBestX-CentroX;
+        DeltaY=cStruct.iBestY-CentroY;
+        TempX=(256+DeltaX);
+        TempY=(256+DeltaY);
       
-      while((TempX % 5)!=0 && TempX<510) // Se não caiu no range do raster, forçar ele sempre para cima e direita
-      	TempX++;      
-      while((TempY % 5)!=0 && TempY<510)
-      	TempY++;      	
-      distrubuicao[(TempX)/5][(TempY)/5]++; 
-      }
+        while((TempX % 5)!=0 && TempX<510) // Se não caiu no range do raster, forçar ele sempre para cima e direita
+        	TempX++;      
+        while((TempY % 5)!=0 && TempY<510)
+        	TempY++;      	
+        distribuicao[(TempX)/5][(TempY)/5]++;
+      } 
+    }
   }
 
   
